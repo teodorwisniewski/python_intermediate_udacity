@@ -20,6 +20,7 @@ def find_anagrams(letters, words):
     :return: A set of anagrams of the given letters found in the word bank.
     """
     ## 1st Solution
+    # does not work if "Adaaam" and "Adamm"
     # list_of_letters = turn_a_word_into_a_list(letters)
     # output_set = set()
     # for word in words:
