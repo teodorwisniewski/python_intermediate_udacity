@@ -1,5 +1,5 @@
 from wordsets import english_words_small
-
+from _collections import defaultdict
 
 def turn_a_word_into_a_list(word):
     letters = [char for char in word.lower()]
@@ -28,15 +28,21 @@ def find_anagrams(letters, words):
     #         output_set.add(word)
 
     # 2nd solution
-    lookup = {}
-    for word in words:
-        key_to_lookup = ''.join(sorted(word))
-        if key_to_lookup not in lookup:
-            lookup[key_to_lookup] = set()
-        lookup[key_to_lookup].add(word)
-    check_this_word = ''.join(sorted(letters))
-    return lookup.get(check_this_word, set())
+    # lookup = {}
+    # for word in words:
+    #     key_to_lookup = ''.join(sorted(word))
+    #     if key_to_lookup not in lookup:
+    #         lookup[key_to_lookup] = set()
+    #     lookup[key_to_lookup].add(word)
+    # check_this_word = ''.join(sorted(letters))
+    # return lookup.get(check_this_word, set())
 
+    # 3rd solution
+    lookup = defaultdict(set)
+    for word in words:
+        lookup[''.join(sorted(word))].add(word)
+    search = ''.join(sorted(letters))
+    return lookup.get(search, set())
 
 
 if __name__ == '__main__':
