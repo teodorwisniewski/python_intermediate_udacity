@@ -12,12 +12,6 @@ def check_both_words_same_letters(word1, word2):
     return cond1 and cond2
 
 
-def turn_into_sorted_string(word):
-    list_of_word_char = turn_a_word_into_a_list(word)
-    sorted_str = "".join(sorted(list_of_word_char))
-    return sorted_str
-
-
 def find_anagrams(letters, words):
     """Find a collection of anagrams of given letters from a given word bank.
 
@@ -36,11 +30,11 @@ def find_anagrams(letters, words):
     # 2nd solution
     lookup = {}
     for word in words:
-        key_to_lookup = turn_into_sorted_string(word)
+        key_to_lookup = ''.join(sorted(word))
         if key_to_lookup not in lookup:
             lookup[key_to_lookup] = set()
         lookup[key_to_lookup].add(word)
-    check_this_word = turn_into_sorted_string(letters)
+    check_this_word = ''.join(sorted(letters))
     return lookup.get(check_this_word, set())
 
 
