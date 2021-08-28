@@ -23,4 +23,4 @@ def load_words_from_filename(filename):
         return set(line.strip().lower() for line in infile)
 
 
-english_words = load_words_from_filename("words.txt")
+# english_words = load_words_from_filename("words.txt")
