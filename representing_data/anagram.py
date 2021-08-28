@@ -1,5 +1,14 @@
-from wordsets import english_words, english_words_small
+from wordsets import english_words_small
 
+
+def turn_a_word_into_a_list(word):
+    letters = [char for char in word.lower()]
+    return letters
+
+def check_both_words_same_letters(word1, word2):
+    cond1 = len(word1) == len(word2)
+    cond2 = all(item in word1 for item in word2)
+    return cond1 and cond2
 
 def find_anagrams(letters, words):
     """Find a collection of anagrams of given letters from a given word bank.
@@ -9,12 +18,16 @@ def find_anagrams(letters, words):
     :return: A set of anagrams of the given letters found in the word bank.
     """
     #### ADD YOUR CODE BELOW ####
-
-    sorted_letters = [char for char in letters.lower()]
-    sorted_letters = sorted(sorted_letters)
+    list_of_letters = turn_a_word_into_a_list(letters)
+    output_set = set()
+    for word in words:
+        list_of_word_char = turn_a_word_into_a_list(word)
+        if check_both_words_same_letters(list_of_letters, list_of_word_char):
+            output_set.add(word)
 
     #### ADD YOUR CODE ABOVE ####
-    return sorted_letters, words
+    return output_set
+
 
 
 if __name__ == '__main__':
