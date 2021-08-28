@@ -10,6 +10,7 @@ def check_both_words_same_letters(word1, word2):
     cond2 = all(item in word1 for item in word2)
     return cond1 and cond2
 
+
 def find_anagrams(letters, words):
     """Find a collection of anagrams of given letters from a given word bank.
 
@@ -17,7 +18,6 @@ def find_anagrams(letters, words):
     :param words: A set of lowercase, alphabetic English words in a word bank.
     :return: A set of anagrams of the given letters found in the word bank.
     """
-    #### ADD YOUR CODE BELOW ####
     list_of_letters = turn_a_word_into_a_list(letters)
     output_set = set()
     for word in words:
@@ -25,7 +25,6 @@ def find_anagrams(letters, words):
         if check_both_words_same_letters(list_of_letters, list_of_word_char):
             output_set.add(word)
 
-    #### ADD YOUR CODE ABOVE ####
     return output_set
 
 
