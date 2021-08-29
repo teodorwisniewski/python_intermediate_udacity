@@ -63,7 +63,7 @@ def predict(tree, numbers):
             new_word = get_values(node)
             results.extend(new_word)
 
-    return results
+    return sorted(results, key=lambda x:x[1], reverse=True)
 
 
 if __name__ == '__main__':
