@@ -1,6 +1,9 @@
 import helper
 import gold
 from collections import  defaultdict
+import string
+from itertools import product, combinations, chain
+
 
 def parse_content(content):
     splitted_content = content.split('\n')
@@ -26,8 +29,41 @@ def make_tree(words):
     return trie
 
 
+def get_values(d, result=None):
+    if result is None:
+        result = []
+    for key, value in d.items():
+        if isinstance(value,dict):
+            get_values(value, result=result)
+        if "$" in key:
+            result.append((key[1:],value))
+    return result
+
 def predict(tree, numbers):
-    return {}
+    letters_az = string.ascii_lowercase
+    numbers_t9 = '23456789'
+    mapping_numbers_to_letters_t9 = {}
+    for i, number in enumerate(numbers_t9):
+        letters = letters_az[i*3:3*(1+i)]
+        mapping_numbers_to_letters_t9[number] = letters
+    mapping_numbers_to_letters_t9[number] = mapping_numbers_to_letters_t9[number] + letters_az[-1]
+    numbers_to_letters = {}
+    for i, number in enumerate(numbers):
+        letters = mapping_numbers_to_letters_t9[number]
+        numbers_to_letters[f"i={i+1}={number}"] = [ch for ch in letters]
+    combs = list(product(*numbers_to_letters.values()))
+    results = []
+    for comb in combs:
+        node = tree
+        for ch in comb:
+            node = node.get(ch,None)
+            if node is None:
+                break
+        if node is not None:
+            new_word = get_values(node)
+            results.extend(new_word)
+
+    return results
 
 
 if __name__ == '__main__':
@@ -44,7 +80,7 @@ if __name__ == '__main__':
     while True:
         # PART 3: Predict words that could follow
         numbers = helper.ask_for_numbers()
-        predictions = gold.predict(tree, numbers)
+        predictions = predict(tree, numbers)
 
         if not predictions:
             print('No words were found that match those numbers. :(')
