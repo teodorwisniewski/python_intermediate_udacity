@@ -13,5 +13,5 @@ def make_tree(words):
     return trie
 
 if __name__ == "__main__":
-    words = {"siemano":534545, "siema":324}
+    words = {"siemano":534545, "siema":324, "siano":43, "elo":553432}
     make_tree(words)
