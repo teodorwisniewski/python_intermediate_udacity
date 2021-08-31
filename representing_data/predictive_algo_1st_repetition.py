@@ -2,7 +2,7 @@ import helper
 import gold
 from collections import  defaultdict
 import string
-from itertools import product, combinations, chain
+import itertools
 
 
 def parse_content(content):
@@ -59,8 +59,16 @@ def make_tree(words):
         node[f"${word}"] = freq
     return trie
 
-def get_values(d, result=None):
-    pass
+
+def get_leaves_from_trie(d, result=None):
+    output_leaves = []
+    for key, value in d.items():
+        if isinstance(value,dict):
+            output_leaves = get_leaves_from_trie(value, result=output_leaves)
+        else:
+            output_leaves.append((key[1:], value))
+    return output_leaves
+
 
 def predict(tree, numbers):
     """
@@ -76,7 +84,32 @@ def predict(tree, numbers):
     :param numbers:
     :return:
     """
-    pass
+    letters_a_to_z = string.ascii_lowercase
+    # dictionary containing mappings between numbers and letters
+    # on the cell phone keyboard
+    t2_mapping = {}
+    numbers_2_to9  = list(range(2,10))
+    for i, number in enumerate(numbers_2_to9):
+        t2_mapping[number] = letters_a_to_z[i*3:3*(1+i)]
+    t2_mapping[numbers_2_to9[-1]] = t2_mapping[numbers_2_to9[-1]] + letters_a_to_z[-1]
+    possible_letters_subsets = []
+    for number in numbers:
+        number = int(number)
+        possible_letters_subsets.append(t2_mapping[number])
+    combs = list(itertools.product(*possible_letters_subsets))
+
+    output_words = []
+    for comb in combs:
+        inner_trie = tree
+        for ch in comb:
+            inner_trie = inner_trie.get(ch, None)
+            if inner_trie is None:
+                break
+        if inner_trie is not None:
+            new_words = get_leaves_from_trie(inner_trie)
+            output_words.extend(new_words)
+
+    return output_words
 
 
 if __name__ == '__main__':
@@ -93,7 +126,7 @@ if __name__ == '__main__':
     while True:
         # PART 3: Predict words that could follow
         numbers = helper.ask_for_numbers()
-        predictions = gold.predict(tree, numbers)
+        predictions = predict(tree, numbers)
 
         if not predictions:
             print('No words were found that match those numbers. :(')
