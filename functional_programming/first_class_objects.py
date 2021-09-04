@@ -11,3 +11,9 @@ foo = echo
 print(foo)
 print(id(foo))
 print(hex(id(foo)))
+
+print(locals())
+
+print('echo' in locals())
+print(globals())
+print(globals()==locals())
