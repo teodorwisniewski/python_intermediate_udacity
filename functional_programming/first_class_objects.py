@@ -17,3 +17,13 @@ print(locals())
 print('echo' in locals())
 print(globals())
 print(globals()==locals())
+
+
+def fun1(arg):
+    """
+    This funtion connects user to the db
+    :param arg:
+    :return:
+    """
+
+print(help(fun1))
