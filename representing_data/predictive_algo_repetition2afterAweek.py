@@ -26,7 +26,12 @@ def parse_content(content):
     :param content:
     :return:
     """
-    pass
+    splitted_terms = content.split("\n")
+    output = {
+            el.split()[0]:int(el.split()[1])
+                for el in splitted_terms
+    }
+    return output
 
 def make_tree(words):
     """
@@ -44,11 +49,28 @@ def make_tree(words):
     :param words:
     :return:
     """
+    trie = {}
+    for word, freq in words.items():
+        node = trie
+        for ch in word:
+            if ch not in node:
+                node[ch] = {}
+            node = node[ch]
+        node[f"${word}"] = freq
+    return trie
 
-    pass
 
-def get_values(d, result=None):
-    pass
+def get_words_from_leaves(d):
+    output = []
+    for key, value in d.items():
+        if isinstance(value,dict):
+            output.extend(get_words_from_leaves(value))
+        else:
+            new_word = [(key[1:], value)]
+            output.extend(new_word)
+
+    return output
+
 
 def predict(tree, numbers):
     """
@@ -64,7 +86,27 @@ def predict(tree, numbers):
     :param numbers:
     :return:
     """
-    pass
+    letters_a_z = string.ascii_lowercase
+    mapping_t9 = {}
+    for i, number in enumerate(range(2,10)):
+        mapping_t9[str(number)] = letters_a_z[3*i:3*(i+1)]
+    mapping_t9[str(number)] = mapping_t9[str(number)] + letters_a_z[-1]
+    output_words = []
+    subsets_of_letters = [mapping_t9[number] for number in numbers]
+    combs = product(*subsets_of_letters)
+    for comb in combs:
+        node = tree
+        for letter in comb:
+            node = node.get(letter, None)
+            if node is None:
+                break
+        if node is None:
+            continue
+        new_words = get_words_from_leaves(node)
+        output_words.extend(new_words)
+
+    output_words.sort(key=lambda x: x[1], reverse=True)
+    return output_words
 
 
 if __name__ == '__main__':
@@ -73,15 +115,15 @@ if __name__ == '__main__':
     # When you've finished implementing a part, remove the `gold.` prefix to check your own code.
 
     # PART 1: Parsing a string into a dictionary.
-    words = gold.parse_content(content)
+    words = parse_content(content)
 
     # PART 2: Building a trie from a collection of words.
-    tree = gold.make_tree(words)
+    tree = make_tree(words)
 
     while True:
         # PART 3: Predict words that could follow
         numbers = helper.ask_for_numbers()
-        predictions = gold.predict(tree, numbers)
+        predictions = predict(tree, numbers)
 
         if not predictions:
             print('No words were found that match those numbers. :(')
