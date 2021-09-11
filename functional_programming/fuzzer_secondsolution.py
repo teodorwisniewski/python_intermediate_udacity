@@ -7,9 +7,10 @@ def random_list(size, start=0, stop=10):
 
 
 def generate_cases():
-    return (
+    generator_expr = (
         random_list(i) for i in count()
     )
+    return generator_expr
 
 if __name__ == '__main__':
     for case in generate_cases():
