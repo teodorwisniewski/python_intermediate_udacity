@@ -10,7 +10,7 @@ def generate_cases():
     generator_expr = (
         random_list(i) for i in count()
     )
-    return generator_expr
+    yield from generator_expr
 
 if __name__ == '__main__':
     for case in generate_cases():
