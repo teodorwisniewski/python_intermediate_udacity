@@ -23,11 +23,13 @@ def foo(a: int, b: str) -> bool:
 
 if __name__ == "__main__":
     # When used correctly, everything is great!
-    foo(3, 'ABCDE')  # => False
-    foo(1, 'WXYZ')
+    print(foo(3, 'ABCDE'))  # => False
+    print(foo(1, 'WXYZ'))  # => TRUE
 
     # But if the arguments are the wrong type, this decorator function will severely complain!
-    foo('WXYZ', 1)
+    print(foo('WXYZ', 1))
+
+
     # Lots of information about an error
     # TypeError: Bad Argument! Received a=WXYZ, expecting object of type <class 'int'>
     #
@@ -38,6 +40,14 @@ if __name__ == "__main__":
     def foo(a: int, b: str) -> bool:
         return b[a] == 'X'
 
+
     # This isn't strictly necessary, but if we want to decorate callables with just check_types
     # then we'd have to modify the implementation.
     # ;
+
+    # When used correctly, everything is great!
+    print(foo(3, 'ABCDE'))  # => False
+    print(foo(1, 'WXYZ'))  # => TRUE
+
+    # But if the arguments are the wrong type, this decorator function will severely complain!
+    print(foo('WXYZ', 1))
