@@ -1,26 +1,24 @@
 class Customer:
 
-    def __init__(self,firstname, lastname, tier="free", price=0):
-        self.firstname = firstname
+    def __init__(self, first_name, lastname, tier=("free", 0)):
+        self.first_name = first_name
         self.lastname = lastname
-        self.tier = tier
-        self.price = price
+        self._tier = tier[0]
+        self._cost = tier[1]
 
     @property
     def name(self):
-        return self.firstname + " " + self.lastname
+        return f"{self.first_name} {self.lastname}"
 
-    def can_access(self,info):
-        if self.tier == 'premium':
-            return True
-        return info["tier"] == self.tier
+    def can_access(self, content):
+        return content["tier"] == "free" or self._tier == content["tier"]
 
     @classmethod
-    def premium(cls,firstname, lastname):
-        return cls(firstname,lastname, tier='premium', price=10)
+    def premium(cls, first_name, lastname):
+        return cls(first_name, lastname, tier=("premium", 10))
 
-    def bill_for(self,nb_moths):
-        return nb_moths*self.price
+    def bill_for(self, nb_months):
+        return self._cost * nb_months
 
 
 if __name__ == '__main__':
