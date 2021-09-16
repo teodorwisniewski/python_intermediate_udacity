@@ -33,8 +33,10 @@ if __name__ == "__main__":
 
     keyboard = brianna.sell_product('Keyboard', 'A nice mechanical keyboard', 100)
     print(keyboard.available)  # => True
+    print(keyboard)
     mary.buy_product(keyboard)
     print(keyboard.available)  # => False
     review = mary.write_review('This is the best keyboard ever!', keyboard)
+    print(keyboard)
     print(review in mary.reviews)  # => True
     print(review in keyboard.reviews)  # => True

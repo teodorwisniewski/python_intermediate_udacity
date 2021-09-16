@@ -15,4 +15,4 @@ class Product:
         return self in Product.products
 
     def __str__(self):
-        return f"Product({self.name}, {self.description}, {self.price}, {self.available})"
+        return f"Product({self.name}, {self.description!r}, {self.price},{self.reviews!r}, {self.available})"
