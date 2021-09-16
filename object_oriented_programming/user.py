@@ -9,6 +9,9 @@ class User:
         self.name = name
         self.reviews = []
 
+    def __str__(self):
+        return f"User({self.user_id}, {self.name}, {self.reviews})"
+
     def sell_product(self, name, description, price):
         p = Product(name, description, price)
         return p

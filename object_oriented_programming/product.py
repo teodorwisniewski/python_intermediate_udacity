@@ -13,3 +13,6 @@ class Product:
     @property
     def available(self):
         return self in Product.products
+
+    def __str__(self):
+        return f"Product({self.name}, {self.description}, {self.price}, {self.available})"
