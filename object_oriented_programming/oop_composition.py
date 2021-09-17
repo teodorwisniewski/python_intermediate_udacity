@@ -26,6 +26,7 @@ class Song:
         self.name = name
         self.artist = artist
         self.album = album
+        self.artist.songs.append(self)
 
     def __str__(self):
         return f"title: \"{self.name}\", artist: {self.artist.name}, album: {self.album.name } \n"
@@ -59,26 +60,31 @@ class Artist:
     def __init__(self, name):
         self.name = name
         self.albums = []
+        self.songs = []
 
     def add_album(self, name, year):
         album = Album(name, self, year)
         self.albums.append(album)
         return album
 
-    def get_songs(self):
-        songs = []
-        for album in self.albums:
-            songs.extend(album.songs)
-        return songs
+
 
 
 class Playlist:
-    def __init__(self, name, artist):
+    def __init__(self, name):
         self.name = name
         self.songs = []
 
     def add_song(self, song):
         self.songs.append(song)
+
+    def __str__(self):
+        songs = "->".join([
+            f"{i+1}. {song}"
+            for i, song in enumerate(self.songs)
+        ])
+        return f"Playlist name: {self.name}\n" \
+               f"list of songs:\n->{songs}"
 
 
 if __name__ == "__main__":
@@ -102,6 +108,19 @@ if __name__ == "__main__":
 
     print(album_relapse)
 
-    songs = artist_eminem.get_songs()
+    songs = artist_eminem.songs
     print(songs)
 
+
+    band = Artist("Bob's Awesome Band")
+    album = Album("Bob's First Single", band, 2013)
+    album.add_song("A Ballad about Cheese")
+    album.add_song("A Ballad about Cheese (dance remix)")
+    album.add_song("A Third Song to Use Up the Rest of the Space")
+
+    playlist = Playlist("My Favourite Songs")
+
+    for song in album.songs:
+        playlist.add_song(song)
+
+    print(playlist)
