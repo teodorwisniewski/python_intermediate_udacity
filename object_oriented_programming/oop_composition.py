@@ -28,8 +28,10 @@ class Song:
         self.album = album
 
     def __str__(self):
-        return f"title: \"{self.name}\" \n"
+        return f"title: \"{self.name}\", artist: {self.artist.name}, album: {self.album.name } \n"
 
+    def __repr__(self):
+        return f"title: \"{self.name}\", artist: {self.artist.name}, album: {self.album.name } \n"
 
 class Album:
     def __init__(self, name, artist, year):
@@ -63,6 +65,12 @@ class Artist:
         self.albums.append(album)
         return album
 
+    def get_songs(self):
+        songs = []
+        for album in self.albums:
+            songs.extend(album.songs)
+        return songs
+
 
 class Playlist:
     def __init__(self, name, artist):
@@ -85,9 +93,15 @@ if __name__ == "__main__":
     print(album_recovery)
 
 
-    album_recovery = artist_eminem.add_album("Recovery", 2010)
-    song1 = album_recovery.add_song("Cold Wind Blows")
-    song2 = album_recovery.add_song("Talkin' 2 Myself")
-    song3 = album_recovery.add_song("On Fire")
-    song4 = album_recovery.add_song("W.T.P")
-    song5 = album_recovery.add_song("Going Through Changes")
+    album_relapse = artist_eminem.add_album("Relapse", 2009)
+    song6 = album_relapse.add_song("Forever")
+    song7 = album_relapse.add_song("Hell Breaks Loose")
+    song8 = album_relapse.add_song("Buffalo Bill")
+    song9 = album_relapse.add_song("Elevator")
+    song10 = album_relapse.add_song("Taking My Ball")
+
+    print(album_relapse)
+
+    songs = artist_eminem.get_songs()
+    print(songs)
+
