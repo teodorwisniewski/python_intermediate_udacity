@@ -26,7 +26,7 @@ class Song:
         self.name = name
         self.artist = artist
         self.album = album
-        self.artist.songs.append(self)
+        artist.add_song(self)
 
     def __str__(self):
         return f"title: \"{self.name}\", artist: {self.artist.name}, album: {self.album.name } \n"
@@ -66,6 +66,9 @@ class Artist:
         album = Album(name, self, year)
         self.albums.append(album)
         return album
+
+    def add_song(self, song):
+        self.songs.append(song)
 
 
 
