@@ -41,10 +41,12 @@ class NearEarthObject:
         :param info: A dictionary of excess keyword arguments supplied to the constructor.
         """
         self.designation = designation
+        if not name:
+            name = None
         self.name = name
         if not diameter:
             diameter = float('nan')
-        self.diameter = diameter
+        self.diameter = float(diameter)
         self.hazardous = True if hazardous.lower() == 'y' else False
 
         # Create an empty initial collection of linked approaches.
