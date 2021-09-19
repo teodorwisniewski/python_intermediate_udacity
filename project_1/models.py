@@ -41,10 +41,10 @@ class NearEarthObject:
 
         :param info: A dictionary of excess keyword arguments supplied to the constructor.
         """
-        self.designation = False
+        self.designation = designation
         self.name = name
-        self.diameter = hazardous
-        self.hazardous = False
+        self.diameter = diameter
+        self.hazardous = hazardous
 
         # Create an empty initial collection of linked approaches.
         self.approaches = []
@@ -78,7 +78,6 @@ class CloseApproach:
     private attribute, but the referenced NEO is eventually replaced in the
     `NEODatabase` constructor.
     """
-    # TODO: How can you, and should you, change the arguments to this constructor?
     # If you make changes, be sure to update the comments in this file.
     def __init__(self, _designation: str = '', time: str = None, distance: float = 0.0, velocity: float = 0.0,
                  **info: Any):
