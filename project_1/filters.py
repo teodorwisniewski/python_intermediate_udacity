@@ -19,6 +19,7 @@ You'll edit this file in Tasks 3a and 3c.
 import operator
 from itertools import islice
 
+
 class UnsupportedCriterionError(NotImplementedError):
     """A filter criterion is unsupported."""
 
@@ -38,6 +39,7 @@ class AttributeFilter:
     Concrete subclasses can override the `get` classmethod to provide custom
     behavior to fetch a desired attribute from the given `CloseApproach`.
     """
+
     def __init__(self, op, value):
         """Construct a new `AttributeFilter` from an binary predicate and a reference value.
 
@@ -73,11 +75,16 @@ class AttributeFilter:
 
 
 def create_filters(
-        date=None, start_date=None, end_date=None,
-        distance_min=None, distance_max=None,
-        velocity_min=None, velocity_max=None,
-        diameter_min=None, diameter_max=None,
-        hazardous=None
+    date=None,
+    start_date=None,
+    end_date=None,
+    distance_min=None,
+    distance_max=None,
+    velocity_min=None,
+    velocity_max=None,
+    diameter_min=None,
+    diameter_max=None,
+    hazardous=None,
 ):
     """Create a collection of filters from user-specified criteria.
 
@@ -109,16 +116,16 @@ def create_filters(
     :return: A collection of filters for use with `query`.
     """
     filters = {}
-    filters['date'] = date
-    filters['start_date'] = start_date
-    filters['end_date'] = end_date
-    filters['distance_min'] = distance_min
-    filters['distance_max'] = distance_max
-    filters['velocity_min'] = velocity_min
-    filters['velocity_max'] = velocity_max
-    filters['diameter_min'] = diameter_min
-    filters['diameter_max'] = diameter_max
-    filters['hazardous'] = hazardous
+    filters["date"] = date
+    filters["start_date"] = start_date
+    filters["end_date"] = end_date
+    filters["distance_min"] = distance_min
+    filters["distance_max"] = distance_max
+    filters["velocity_min"] = velocity_min
+    filters["velocity_max"] = velocity_max
+    filters["diameter_min"] = diameter_min
+    filters["diameter_max"] = diameter_max
+    filters["hazardous"] = hazardous
 
     return filters
 

@@ -33,9 +33,16 @@ class NearEarthObject:
     initialized to an empty collection, but eventually populated in the
     `NEODatabase` constructor.
     """
+
     # If you make changes, be sure to update the comments in this file.
-    def __init__(self, designation: str = '', name: str = None, hazardous:bool = False, diameter: float = float('nan'),
-                 **info: Any):
+    def __init__(
+        self,
+        designation: str = "",
+        name: str = None,
+        hazardous: bool = False,
+        diameter: float = float("nan"),
+        **info: Any,
+    ):
         """Create a new `NearEarthObject`.
 
         :param info: A dictionary of excess keyword arguments supplied to the constructor.
@@ -45,9 +52,9 @@ class NearEarthObject:
             name = None
         self.name = name
         if not diameter:
-            diameter = float('nan')
+            diameter = float("nan")
         self.diameter = float(diameter)
-        self.hazardous = True if hazardous.lower() == 'y' else False
+        self.hazardous = True if hazardous.lower() == "y" else False
 
         # Create an empty initial collection of linked approaches.
         self.approaches = []
@@ -55,17 +62,21 @@ class NearEarthObject:
     @property
     def fullname(self):
         """Return a representation of the full name of this NEO."""
-        return f'{self.designation} + {self.name}'
+        return f"{self.designation} + {self.name}"
 
     def __str__(self):
         """Return `str(self)`."""
-        return f"NearEarthObject(designation={self.designation}, name={self.name}, " \
-               f"diameter={self.diameter:.3f}, hazardous={self.hazardous})"
+        return (
+            f"NearEarthObject(designation={self.designation}, name={self.name}, "
+            f"diameter={self.diameter:.3f}, hazardous={self.hazardous})"
+        )
 
     def __repr__(self):
         """Return `repr(self)`, a computer-readable string representation of this object."""
-        return f"NearEarthObject(designation={self.designation!r}, name={self.name!r}, " \
-               f"diameter={self.diameter:.3f}, hazardous={self.hazardous!r})"
+        return (
+            f"NearEarthObject(designation={self.designation!r}, name={self.name!r}, "
+            f"diameter={self.diameter:.3f}, hazardous={self.hazardous!r})"
+        )
 
 
 class CloseApproach:
@@ -81,9 +92,16 @@ class CloseApproach:
     private attribute, but the referenced NEO is eventually replaced in the
     `NEODatabase` constructor.
     """
+
     # If you make changes, be sure to update the comments in this file.
-    def __init__(self, _designation: str = '', time: str = None, distance: float = 0.0, velocity: float = 0.0,
-                 **info: Any):
+    def __init__(
+        self,
+        _designation: str = "",
+        time: str = None,
+        distance: float = 0.0,
+        velocity: float = 0.0,
+        **info: Any,
+    ):
         """Create a new `CloseApproach`.
 
         :param info: A dictionary of excess keyword arguments supplied to the constructor.
@@ -115,10 +133,14 @@ class CloseApproach:
         """Return `str(self)`."""
         # The project instructions include one possibility. Peek at the __repr__
         # method for examples of advanced string formatting.
-        return f"CloseApproach(time={self.time_str}, distance={self.distance:.2f}, " \
-               f"velocity={self.velocity:.2f}, neo={self.neo})"
+        return (
+            f"CloseApproach(time={self.time_str}, distance={self.distance:.2f}, "
+            f"velocity={self.velocity:.2f}, neo={self.neo})"
+        )
 
     def __repr__(self):
         """Return `repr(self)`, a computer-readable string representation of this object."""
-        return f"CloseApproach(time={self.time_str!r}, distance={self.distance:.2f}, " \
-               f"velocity={self.velocity:.2f}, neo={self.neo!r})"
+        return (
+            f"CloseApproach(time={self.time_str!r}, distance={self.distance:.2f}, "
+            f"velocity={self.velocity:.2f}, neo={self.neo!r})"
+        )

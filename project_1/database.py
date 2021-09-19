@@ -21,6 +21,7 @@ class NEODatabase:
     help fetch NEOs by primary designation or by name and to help speed up
     querying for close approaches that match criteria.
     """
+
     def __init__(self, neos, approaches):
         """Create a new `NEODatabase`.
 
@@ -127,71 +128,84 @@ class NEODatabase:
             for criteria, val in filters.items():
                 if val is None:
                     continue
-                if criteria == 'date':
+                if criteria == "date":
                     subset_date = {
-                        approach for approach in self._approaches
+                        approach
+                        for approach in self._approaches
                         if approach.time.date() == val
                     }
-                elif criteria == 'start_date':
+                elif criteria == "start_date":
                     subset_start_date = {
-                        approach for approach in self._approaches
+                        approach
+                        for approach in self._approaches
                         if approach.time.date() >= val
                     }
-                elif criteria == 'end_date':
+                elif criteria == "end_date":
                     subset_end_date = {
-                        approach for approach in self._approaches
+                        approach
+                        for approach in self._approaches
                         if approach.time.date() <= val
                     }
-                elif criteria == 'distance_min':
+                elif criteria == "distance_min":
                     subset_distance_min = {
-                        approach for approach in self._approaches
+                        approach
+                        for approach in self._approaches
                         if approach.distance >= val
                     }
-                elif criteria == 'distance_max':
+                elif criteria == "distance_max":
                     subset_distance_max = {
-                        approach for approach in self._approaches
+                        approach
+                        for approach in self._approaches
                         if approach.distance <= val
                     }
-                elif criteria == 'velocity_min':
+                elif criteria == "velocity_min":
                     subset_velocity_min = {
-                        approach for approach in self._approaches
+                        approach
+                        for approach in self._approaches
                         if approach.velocity >= val
                     }
-                elif criteria == 'velocity_max':
+                elif criteria == "velocity_max":
                     subset_velocity_max = {
-                        approach for approach in self._approaches
+                        approach
+                        for approach in self._approaches
                         if approach.velocity <= val
                     }
-                elif criteria == 'diameter_min':
+                elif criteria == "diameter_min":
                     subset_diameter_min = {
-                        approach for approach in self._approaches
+                        approach
+                        for approach in self._approaches
                         if approach.neo.diameter >= val
                     }
-                elif criteria == 'diameter_max':
+                elif criteria == "diameter_max":
                     subset_diameter_max = {
-                        approach for approach in self._approaches
+                        approach
+                        for approach in self._approaches
                         if approach.neo.diameter <= val
                     }
-                elif criteria == 'hazardous':
+                elif criteria == "hazardous":
                     subset_hazardous = {
-                        approach for approach in self._approaches
+                        approach
+                        for approach in self._approaches
                         if approach.neo.hazardous == val
                     }
-            all_subsets = (subset_date, subset_start_date, subset_end_date,
-                                                       subset_distance_min, subset_distance_max,
-                                                       subset_diameter_min, subset_diameter_max,
-                                                       subset_velocity_min, subset_velocity_max,
-                                                       subset_hazardous)
-            non_empty_subsets = [subset for subset in all_subsets if len(subset)>0]
-            if len(non_empty_subsets)>1:
-                output_subset = non_empty_subsets[0].intersection(*non_empty_subsets[1:])
+            all_subsets = (
+                subset_date,
+                subset_start_date,
+                subset_end_date,
+                subset_distance_min,
+                subset_distance_max,
+                subset_diameter_min,
+                subset_diameter_max,
+                subset_velocity_min,
+                subset_velocity_max,
+                subset_hazardous,
+            )
+            non_empty_subsets = [subset for subset in all_subsets if len(subset) > 0]
+            if len(non_empty_subsets) > 1:
+                output_subset = non_empty_subsets[0].intersection(
+                    *non_empty_subsets[1:]
+                )
             else:
                 output_subset = non_empty_subsets[0]
             for approach in output_subset:
                 yield approach
-
-
-
-
-
-

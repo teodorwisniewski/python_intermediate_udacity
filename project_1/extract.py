@@ -29,13 +29,18 @@ def load_neos(neo_csv_path):
     with open(neo_csv_path) as f:
         reader = csv.reader(f)
         headers = next(reader)
-        index_pdes = headers.index('pdes')
-        index_name = headers.index('name')
-        index_pha = headers.index('pha')
-        index_diameter = headers.index('diameter')
+        index_pdes = headers.index("pdes")
+        index_name = headers.index("name")
+        index_pha = headers.index("pha")
+        index_diameter = headers.index("diameter")
 
         for line in reader:
-            args = line[index_pdes], line[index_name], line[index_pha], line[index_diameter]
+            args = (
+                line[index_pdes],
+                line[index_name],
+                line[index_pha],
+                line[index_diameter],
+            )
             neo_obj = NearEarthObject(*args)
             output.append(neo_obj)
 
@@ -52,12 +57,12 @@ def load_approaches(cad_json_path):
     output_collection = []
     with open(cad_json_path) as f:
         data = json.load(f)
-        headers = data['fields']
-        index_des = headers.index('des')
-        index_cd = headers.index('cd')
-        index_dist = headers.index('dist')
-        index_v_rel = headers.index('v_rel')
-        for line in data['data']:
+        headers = data["fields"]
+        index_des = headers.index("des")
+        index_cd = headers.index("cd")
+        index_dist = headers.index("dist")
+        index_v_rel = headers.index("v_rel")
+        for line in data["data"]:
             args = line[index_des], line[index_cd], line[index_dist], line[index_v_rel]
             approach_obj = CloseApproach(*args)
             output_collection.append(approach_obj)
