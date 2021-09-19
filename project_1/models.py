@@ -35,7 +35,7 @@ class NearEarthObject:
     `NEODatabase` constructor.
     """
     # If you make changes, be sure to update the comments in this file.
-    def __init__(self, designation: str = '', name: str = None, diameter: float = float('nan'), hazardous:bool = False,
+    def __init__(self, designation: str = '', name: str = None, hazardous:bool = False, diameter: float = float('nan'),
                  **info: Any):
         """Create a new `NearEarthObject`.
 
@@ -44,7 +44,7 @@ class NearEarthObject:
         self.designation = designation
         self.name = name
         self.diameter = diameter
-        self.hazardous = hazardous
+        self.hazardous = True if hazardous.lower() == 'y' else False
 
         # Create an empty initial collection of linked approaches.
         self.approaches = []
