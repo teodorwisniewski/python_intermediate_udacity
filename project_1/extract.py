@@ -49,4 +49,18 @@ def load_approaches(cad_json_path):
     :return: A collection of `CloseApproach`es.
     """
     # TODO: Load close approach data from the given JSON file.
-    return ()
+    output_collection = []
+    with open(cad_json_path) as f:
+        data = json.load(f)
+        print(data)
+        headers = data['fields']
+        index_des = headers.index('des')
+        index_cd = headers.index('cd')
+        index_dist = headers.index('dist')
+        index_v_rel = headers.index('v_rel')
+        for line in data['data']:
+            args = line[index_des], line[index_cd], line[index_dist], line[index_v_rel]
+            approach_obj = CloseApproach(*args)
+            output_collection.append(approach_obj)
+
+    return output_collection
