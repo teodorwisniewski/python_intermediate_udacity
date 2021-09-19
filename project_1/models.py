@@ -21,7 +21,6 @@ from helpers import cd_to_datetime, datetime_to_str
 from typing import Any
 
 
-
 class NearEarthObject:
     """A near-Earth object (NEO).
 
@@ -87,8 +86,8 @@ class CloseApproach:
         """
         self._designation = _designation
         self.time = cd_to_datetime(time)
-        self.distance = distance
-        self.velocity = velocity
+        self.distance = float(distance)
+        self.velocity = float(velocity)
 
         # Create an attribute for the referenced NEO, originally None.
         self.neo = None
