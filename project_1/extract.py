@@ -52,7 +52,6 @@ def load_approaches(cad_json_path):
     output_collection = []
     with open(cad_json_path) as f:
         data = json.load(f)
-        print(data)
         headers = data['fields']
         index_des = headers.index('des')
         index_cd = headers.index('cd')
