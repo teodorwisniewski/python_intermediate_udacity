@@ -42,6 +42,8 @@ class NearEarthObject:
         """
         self.designation = designation
         self.name = name
+        if not diameter:
+            diameter = float('nan')
         self.diameter = diameter
         self.hazardous = True if hazardous.lower() == 'y' else False
 
