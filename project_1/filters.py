@@ -108,8 +108,19 @@ def create_filters(
     :param hazardous: Whether the NEO of a matching `CloseApproach` is potentially hazardous.
     :return: A collection of filters for use with `query`.
     """
-    # TODO: Decide how you will represent your filters.
-    return ()
+    filters = {}
+    filters['date'] = date
+    filters['start_date'] = start_date
+    filters['end_date'] = end_date
+    filters['distance_min'] = distance_min
+    filters['distance_max'] = distance_max
+    filters['velocity_min'] = velocity_min
+    filters['velocity_max'] = velocity_max
+    filters['diameter_min'] = diameter_min
+    filters['diameter_max'] = diameter_max
+    filters['hazardous'] = hazardous
+
+    return filters
 
 
 def limit(iterator, n=None):

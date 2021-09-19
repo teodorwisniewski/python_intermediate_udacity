@@ -108,5 +108,90 @@ class NEODatabase:
         :return: A stream of matching `CloseApproach` objects.
         """
         # TODO: Generate `CloseApproach` objects that match all of the filters.
-        for approach in self._approaches:
-            yield approach
+        if all([None is val for val in filters.values()]):
+            for approach in self._approaches:
+                yield approach
+        else:
+            output_subset = set()
+            subset_date = set()
+            subset_start_date = set()
+            subset_end_date = set()
+            subset_distance_min = set()
+            subset_distance_max = set()
+            subset_diameter_min = set()
+            subset_diameter_max = set()
+            subset_velocity_min = set()
+            subset_velocity_max = set()
+            subset_hazardous = set()
+
+            for criteria, val in filters.items():
+                if val is None:
+                    continue
+                if criteria == 'date':
+                    subset_date = {
+                        approach for approach in self._approaches
+                        if approach.time.date() == val
+                    }
+                elif criteria == 'start_date':
+                    subset_start_date = {
+                        approach for approach in self._approaches
+                        if approach.time.date() >= val
+                    }
+                elif criteria == 'end_date':
+                    subset_end_date = {
+                        approach for approach in self._approaches
+                        if approach.time.date() <= val
+                    }
+                elif criteria == 'distance_min':
+                    subset_distance_min = {
+                        approach for approach in self._approaches
+                        if approach.distance >= val
+                    }
+                elif criteria == 'distance_max':
+                    subset_distance_max = {
+                        approach for approach in self._approaches
+                        if approach.distance <= val
+                    }
+                elif criteria == 'velocity_min':
+                    subset_velocity_min = {
+                        approach for approach in self._approaches
+                        if approach.velocity >= val
+                    }
+                elif criteria == 'velocity_max':
+                    subset_velocity_max = {
+                        approach for approach in self._approaches
+                        if approach.velocity <= val
+                    }
+                elif criteria == 'diameter_min':
+                    subset_diameter_min = {
+                        approach for approach in self._approaches
+                        if approach.neo.diameter >= val
+                    }
+                elif criteria == 'diameter_max':
+                    subset_diameter_max = {
+                        approach for approach in self._approaches
+                        if approach.neo.diameter <= val
+                    }
+                elif criteria == 'hazardous':
+                    subset_hazardous = {
+                        approach for approach in self._approaches
+                        if approach.neo.hazardous == val
+                    }
+            all_subsets = (subset_date, subset_start_date, subset_end_date,
+                                                       subset_distance_min, subset_distance_max,
+                                                       subset_diameter_min, subset_diameter_max,
+                                                       subset_velocity_min, subset_velocity_max,
+                                                       subset_hazardous)
+            non_empty_subsets = [subset for subset in all_subsets if len(subset)>0]
+            if len(non_empty_subsets)>1:
+                output_subset = non_empty_subsets[0].intersection(*non_empty_subsets[1:])
+            else:
+                output_subset = non_empty_subsets[0]
+            for approach in output_subset:
+                yield approach
+
+
+
+
+
+
