@@ -11,6 +11,7 @@ data on NEOs and close approaches extracted by `extract.load_neos` and
 
 You'll edit this file in Tasks 2 and 3.
 """
+import operator
 
 
 class NEODatabase:
@@ -43,10 +44,8 @@ class NEODatabase:
         self._neos = neos
         self._approaches = approaches
 
-        # TODO: What additional auxiliary data structures will be useful?
         self.mapping_neo_desingation = {}
         self.mapping_neo_name = {}
-        # TODO: Link together the NEOs and their close approaches.
         for i, neo in enumerate(neos):
             self.mapping_neo_desingation[neo.designation] = i
             self.mapping_neo_name[neo.name] = i
@@ -108,7 +107,6 @@ class NEODatabase:
         :param filters: A collection of filters capturing user-specified criteria.
         :return: A stream of matching `CloseApproach` objects.
         """
-        # TODO: Generate `CloseApproach` objects that match all of the filters.
         if all([None is val for val in filters.values()]):
             for approach in self._approaches:
                 yield approach
@@ -125,69 +123,90 @@ class NEODatabase:
             subset_velocity_max = set()
             subset_hazardous = set()
 
+            def get_specific_approaches(approches, attributes_to_extract, value, op):
+                """This function allows to extract specific attribute's value and compare it
+                to the given value and return a set of unique Approach objects
+
+                :param approches: itarable of Aproches objects
+                :param attributes_to_extract: attributes that we want to extract
+                :param value: value to which we compare
+                :param op: operator for instance ==, =>, etc.
+                :return: a set of unique Approach objects
+                """
+                output_set = set()
+                for approach in approches:
+                    obj_attr = approach
+                    for att_name, att_type in attributes_to_extract:
+                        if att_type == "attribute":
+                            obj_attr = getattr(obj_attr, att_name)
+                        else:
+                            obj_attr = getattr(obj_attr, att_name)()
+                    if op(obj_attr, value):
+                        output_set.add(approach)
+                return output_set
+
             for criteria, val in filters.items():
                 if val is None:
                     continue
                 if criteria == "date":
-                    subset_date = {
-                        approach
-                        for approach in self._approaches
-                        if approach.time.date() == val
-                    }
+                    subset_date = get_specific_approaches(
+                        self._approaches,
+                        [("time", "attribute"), ("date", "method")],
+                        val,
+                        operator.eq,
+                    )
                 elif criteria == "start_date":
-                    subset_start_date = {
-                        approach
-                        for approach in self._approaches
-                        if approach.time.date() >= val
-                    }
+                    subset_start_date = get_specific_approaches(
+                        self._approaches,
+                        [("time", "attribute"), ("date", "method")],
+                        val,
+                        operator.ge,
+                    )
                 elif criteria == "end_date":
-                    subset_end_date = {
-                        approach
-                        for approach in self._approaches
-                        if approach.time.date() <= val
-                    }
+                    subset_end_date = get_specific_approaches(
+                        self._approaches,
+                        [("time", "attribute"), ("date", "method")],
+                        val,
+                        operator.le,
+                    )
                 elif criteria == "distance_min":
-                    subset_distance_min = {
-                        approach
-                        for approach in self._approaches
-                        if approach.distance >= val
-                    }
+                    subset_distance_min = get_specific_approaches(
+                        self._approaches, [("distance", "attribute")], val, operator.ge
+                    )
                 elif criteria == "distance_max":
-                    subset_distance_max = {
-                        approach
-                        for approach in self._approaches
-                        if approach.distance <= val
-                    }
+                    subset_distance_max = get_specific_approaches(
+                        self._approaches, [("distance", "attribute")], val, operator.le
+                    )
                 elif criteria == "velocity_min":
-                    subset_velocity_min = {
-                        approach
-                        for approach in self._approaches
-                        if approach.velocity >= val
-                    }
+                    subset_velocity_min = get_specific_approaches(
+                        self._approaches, [("velocity", "attribute")], val, operator.ge
+                    )
                 elif criteria == "velocity_max":
-                    subset_velocity_max = {
-                        approach
-                        for approach in self._approaches
-                        if approach.velocity <= val
-                    }
+                    subset_velocity_max = get_specific_approaches(
+                        self._approaches, [("velocity", "attribute")], val, operator.le
+                    )
                 elif criteria == "diameter_min":
-                    subset_diameter_min = {
-                        approach
-                        for approach in self._approaches
-                        if approach.neo.diameter >= val
-                    }
+                    subset_diameter_min = get_specific_approaches(
+                        self._approaches,
+                        [("neo", "attribute"), ("diameter", "attribute")],
+                        val,
+                        operator.ge,
+                    )
                 elif criteria == "diameter_max":
-                    subset_diameter_max = {
-                        approach
-                        for approach in self._approaches
-                        if approach.neo.diameter <= val
-                    }
+                    subset_diameter_max = get_specific_approaches(
+                        self._approaches,
+                        [("neo", "attribute"), ("diameter", "attribute")],
+                        val,
+                        operator.le,
+                    )
+
                 elif criteria == "hazardous":
-                    subset_hazardous = {
-                        approach
-                        for approach in self._approaches
-                        if approach.neo.hazardous == val
-                    }
+                    subset_hazardous = get_specific_approaches(
+                        self._approaches,
+                        [("neo", "attribute"), ("hazardous", "attribute")],
+                        val,
+                        operator.eq,
+                    )
             all_subsets = (
                 subset_date,
                 subset_start_date,
