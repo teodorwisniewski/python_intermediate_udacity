@@ -1,11 +1,10 @@
 """
 This module allows to do a basic exploratory data analysis.
+
 It allows to answer questions.
 """
-
 import json
 import pandas as pd
-
 
 
 filename = "neos.csv"

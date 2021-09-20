@@ -124,7 +124,9 @@ class NEODatabase:
             subset_hazardous = set()
 
             def get_specific_approaches(approches, attributes_to_extract, value, op):
-                """This function allows to extract specific attribute's value and compare it
+                """Get a set of filtered Approach objects.
+
+                This function allows to extract specific attribute's value and compare it
                 to the given value and return a set of unique Approach objects
 
                 :param approches: itarable of Aproches objects
