@@ -1,8 +1,12 @@
 import random
 
-cat_string = "--Whiskers--, --Spot--, --Meowmeow--, --Tiger--, --Kitty--, --Henry--, --Mr.Paws--"
+catString = "--Whiskers--, --Spot--, --Meowmeow--, --Tiger--, --Kitty--, --Henry--, --Mr.Paws--"
 
-names = [n.replace("--","") for n in cat_string.split("--, --") ]
 
-random_name = random.choice(names)
-print(f'{random_name} is a good kitty.')
+def random_cat(string_list):
+    cat_list = string_list.split(', ')  # split the cats
+    cat_list = [cat.strip('--') for cat in cat_list]
+    return random.choice(cat_list)
+
+
+print(f'{random_cat(catString)} is a good kitty')
