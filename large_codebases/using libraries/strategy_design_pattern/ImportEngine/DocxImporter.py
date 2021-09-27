@@ -14,6 +14,7 @@ class DocxImporter(ImporterInterface):
 
         cats = []
         doc = docx.Document(path)
+
         for para in doc.paragraphs:
             if para.text != "":
                 parsed = para.text.split(',')
