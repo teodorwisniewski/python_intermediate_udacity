@@ -4,7 +4,7 @@ from typing import List
 
 
 class ImporterInterface(ABC):
-    allowed_exts = ['pdf', 'csv']
+    allowed_exts = []
 
     @classmethod
     def can_ingest(cls, path: str) -> bool:
