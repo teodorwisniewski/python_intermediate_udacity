@@ -5,6 +5,8 @@
 
 import sys
 
+filename = sys.argv[0]
 name = sys.argv[1].lower().title()
 city = sys.argv[2].lower().title()
+print(f"Running {filename}")
 print(f"hello, {name} from {city}.")
