@@ -25,8 +25,8 @@ if __name__ == "__main__":
                         help='city to check')
     args = parser.parse_args()
 
-    city=args.city
-    country=args.country
+    city = args.city
+    country = args.country
 
     if(makeUmbrellaDecision(city, country)):
         print(f'You need an umbrella today in {city}, {country}')
