@@ -5,7 +5,7 @@ import docx
 
 
 class DocxImporter(ImporterInterface):
-    allowed_exts = "docs"
+    allowed_exts = ["docs"]
 
     @classmethod
     def parse(cls, path: str) -> List[Cat]:
