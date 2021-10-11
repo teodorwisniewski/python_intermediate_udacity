@@ -12,3 +12,4 @@
 *.zip
 /large_codebases/using libraries/myvenv/
 *.png
+/large_codebases/meme-generator-starter-code/src/_data/
