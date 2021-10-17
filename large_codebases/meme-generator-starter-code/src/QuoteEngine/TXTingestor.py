@@ -1,11 +1,7 @@
-import subprocess
 from typing import List
-import pathlib
-import random
-import os
 
-from .ingestor import IngestorInterface
-from .quote_model import QuoteModel
+from .IngestorInterface import IngestorInterface
+from .Quote_Model import QuoteModel
 
 
 class TXTIngestor(IngestorInterface):
@@ -18,15 +14,14 @@ class TXTIngestor(IngestorInterface):
             raise Exception(f"Extension is not allowed")
 
         quotes = []
-        doc = docx.Document(path)
 
-        for para in doc.paragraphs:
-            if para.text != "":
-                parsed = para.text.split(',')
-                new_cat = QuoteModel(parsed[0],
-                              int(parsed[1]),
-                              bool(parsed[2])
+        with open(path, 'r') as f:
+            for line in f:
+                body, author = line.split("-")
+                new_quote = QuoteModel(body.strip().strip('"'),
+                              author.strip()
                               )
-                quotes.append(new_cat)
+                quotes.append(new_quote)
 
         return quotes
+
