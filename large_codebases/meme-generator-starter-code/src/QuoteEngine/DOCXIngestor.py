@@ -1,11 +1,7 @@
-import subprocess
 from typing import List
-import pathlib
-import random
-import os
 import docx
-from .ingestor import IngestorInterface
-from .quote_model import QuoteModel
+from .IngestorInterface import IngestorInterface
+from .QuoteModel import QuoteModel
 
 
 class DOCXIngestor(IngestorInterface):
@@ -22,11 +18,8 @@ class DOCXIngestor(IngestorInterface):
 
         for para in doc.paragraphs:
             if para.text != "":
-                parsed = para.text.split(',')
-                new_cat = QuoteModel(parsed[0],
-                              int(parsed[1]),
-                              bool(parsed[2])
-                              )
-                quotes.append(new_cat)
+                body, author = para.text.split(" - ")
+                new_quote = QuoteModel(body.strip('"'), author.strip())
+                quotes.append(new_quote)
 
         return quotes

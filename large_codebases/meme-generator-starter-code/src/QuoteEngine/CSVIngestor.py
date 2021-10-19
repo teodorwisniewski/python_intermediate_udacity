@@ -22,7 +22,7 @@ class CSVIngestor(IngestorInterface):
             next(reader)
             for row in reader:
                 body, author = row
-                new_quote = QuoteModel(body, author)
+                new_quote = QuoteModel(body.strip('"'), author)
                 quotes.append(new_quote)
 
         return quotes
