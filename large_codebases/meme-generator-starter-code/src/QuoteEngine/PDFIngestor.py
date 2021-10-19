@@ -1,10 +1,10 @@
 import subprocess
 from typing import List
+from tempfile import TemporaryDirectory
 import os
 from .IngestorInterface import IngestorInterface
 from .QuoteModel import QuoteModel
-from tempfile import TemporaryDirectory
-from QuoteEngine import TXTIngestor
+from .TXTIngestor import TXTIngestor
 
 
 class PDFIngestor(IngestorInterface):
