@@ -1,7 +1,4 @@
 from typing import List
-import pathlib
-import random
-import os
 import csv
 from .IngestorInterface import IngestorInterface
 from .QuoteModel import QuoteModel
