@@ -25,22 +25,33 @@ sys.path.append(str(project_path))
 
 from QuoteEngine import QuoteModel
 from QuoteEngine.TXTIngestor import TXTIngestor
+from QuoteEngine import CSVIngestor
+
 
 TESTS_ROOT = (Path(__file__).parent.parent).resolve()
 TEST_TXT_FILE = TESTS_ROOT / '_data' / 'DogQuotes'  / 'DogQuotesTXT.txt'
-TEST_CAD_FILE = TESTS_ROOT / '_data' / 'DogQuotes'  / 'DogQuotesCSV.csv'
+TEST_CSV_FILE = TESTS_ROOT / '_data' / 'DogQuotes'  / 'DogQuotesCSV.csv'
 
 
 class TestLoadNEOs(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.txt_ingestor_output = TXTIngestor.parse(TEST_TXT_FILE)
+        cls.csv_ingestor_output = CSVIngestor.parse(TEST_CSV_FILE)
 
-    def test_approaches_contain_close_approaches(self):
+    def test_txt_ingestor(self):
         self.assertIsNotNone(self.txt_ingestor_output)
         self.assertIsInstance(self.txt_ingestor_output, List)
         self.assertIsInstance(self.txt_ingestor_output[0], QuoteModel)
         self.assertEqual(len(self.txt_ingestor_output),2)
+        self.assertEqual(self.txt_ingestor_output[0].author, "Bork")
+
+    def test_csv_ingestor(self):
+        self.assertIsNotNone(self.csv_ingestor_output)
+        self.assertIsInstance(self.csv_ingestor_output, List)
+        self.assertIsInstance(self.csv_ingestor_output[0], QuoteModel)
+        self.assertEqual(len(self.csv_ingestor_output),2)
+        self.assertEqual(self.csv_ingestor_output[0].author, "Skittle")
 
 
 if __name__ == '__main__':
