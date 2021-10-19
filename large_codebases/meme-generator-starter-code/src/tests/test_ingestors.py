@@ -24,13 +24,15 @@ project_path = Path(os.getcwd()) / "src"
 sys.path.append(str(project_path))
 
 from QuoteEngine import QuoteModel
-from QuoteEngine.TXTIngestor import TXTIngestor
+from QuoteEngine import TXTIngestor
 from QuoteEngine import CSVIngestor
+from QuoteEngine import DOCXIngestor
 
 
 TESTS_ROOT = (Path(__file__).parent.parent).resolve()
 TEST_TXT_FILE = TESTS_ROOT / '_data' / 'DogQuotes'  / 'DogQuotesTXT.txt'
 TEST_CSV_FILE = TESTS_ROOT / '_data' / 'DogQuotes'  / 'DogQuotesCSV.csv'
+TEST_DOCX_FILE = TESTS_ROOT / '_data' / 'DogQuotes'  / 'DogQuotesDOCX.docx'
 
 
 class TestLoadNEOs(unittest.TestCase):
@@ -38,6 +40,7 @@ class TestLoadNEOs(unittest.TestCase):
     def setUpClass(cls):
         cls.txt_ingestor_output = TXTIngestor.parse(TEST_TXT_FILE)
         cls.csv_ingestor_output = CSVIngestor.parse(TEST_CSV_FILE)
+        cls.docx_ingestor_output = DOCXIngestor.parse(TEST_DOCX_FILE)
 
     def test_txt_ingestor(self):
         self.assertIsNotNone(self.txt_ingestor_output)
@@ -52,6 +55,14 @@ class TestLoadNEOs(unittest.TestCase):
         self.assertIsInstance(self.csv_ingestor_output[0], QuoteModel)
         self.assertEqual(len(self.csv_ingestor_output),2)
         self.assertEqual(self.csv_ingestor_output[0].author, "Skittle")
+
+    def test_docx_ingestor(self):
+        self.assertIsNotNone(self.docx_ingestor_output)
+        self.assertIsInstance(self.docx_ingestor_output, List)
+        self.assertIsInstance(self.docx_ingestor_output[0], QuoteModel)
+        self.assertEqual(len(self.docx_ingestor_output),4)
+        self.assertEqual(self.docx_ingestor_output[0].author, "Rex")
+
 
 
 if __name__ == '__main__':
