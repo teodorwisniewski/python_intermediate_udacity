@@ -12,15 +12,23 @@ These tests should pass when Task 2 is complete.
 """
 import collections.abc
 import datetime
-import pathlib
+from pathlib import Path
 import math
+from typing import List
 import unittest
+import sys
+import os
 
-from . import TXTIngestor
 
-TESTS_ROOT = (pathlib.Path(__file__).parent).resolve()
+project_path = Path(os.getcwd()) / "src"
+sys.path.append(str(project_path))
+
+from QuoteEngine import QuoteModel
+from QuoteEngine.TXTIngestor import TXTIngestor
+
+TESTS_ROOT = (Path(__file__).parent.parent).resolve()
 TEST_TXT_FILE = TESTS_ROOT / '_data' / 'DogQuotes'  / 'DogQuotesTXT.txt'
-TEST_CAD_FILE = TESTS_ROOT / '_data' / 'DogQuotes'  / 'test-cad-2020.json'
+TEST_CAD_FILE = TESTS_ROOT / '_data' / 'DogQuotes'  / 'DogQuotesCSV.csv'
 
 
 class TestLoadNEOs(unittest.TestCase):
@@ -29,10 +37,10 @@ class TestLoadNEOs(unittest.TestCase):
         cls.txt_ingestor_output = TXTIngestor.parse(TEST_TXT_FILE)
 
     def test_approaches_contain_close_approaches(self):
-        approach = self.get_first_approach_or_none()
-        self.assertIsNotNone(approach)
-        self.assertIsInstance(approach, CloseApproach)
-        self.assertEqual()
+        self.assertIsNotNone(self.txt_ingestor_output)
+        self.assertIsInstance(self.txt_ingestor_output, List)
+        self.assertIsInstance(self.txt_ingestor_output[0], QuoteModel)
+        self.assertEqual(len(self.txt_ingestor_output),2)
 
 
 if __name__ == '__main__':
