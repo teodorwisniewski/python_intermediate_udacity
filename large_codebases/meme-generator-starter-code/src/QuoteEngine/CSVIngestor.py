@@ -10,7 +10,7 @@ class CSVIngestor(IngestorInterface):
 
     @classmethod
     def parse(cls, path: str) -> List[QuoteModel]:
-        if cls.can_ingest(path):
+        if not cls.can_ingest(path):
             raise Exception(f"Extension is not allowed")
 
         with open(path, "r") as f:
