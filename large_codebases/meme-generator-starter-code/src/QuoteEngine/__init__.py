@@ -1,8 +1,8 @@
 
 
 from .IngestorInterface import IngestorInterface
-from .Quote_Model import QuoteModel
+from .QuoteModel import QuoteModel
 from .CSVingestor import CSVIngestor
-from .TXTingestor import TXTIngestor
+from .TXTIngestor import TXTIngestor
 from .PDFingestor import PDFIngestor
 from .DOCXingestor import DOCXIngestor
