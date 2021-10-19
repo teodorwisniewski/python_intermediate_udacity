@@ -15,9 +15,11 @@ class TXTIngestor(IngestorInterface):
         quotes = []
 
         with open(path, "r") as f:
-            for line in f:
-                body, author = line.split("-")
-                new_quote = QuoteModel(body.strip().strip('"'), author.strip())
-                quotes.append(new_quote)
+            for line in f.readlines():
+                line = line.strip('\n\r').strip()
+                if len(line) > 0:
+                    body, author = line.split('-')
+                    new_quote = QuoteModel(body.strip().strip('"'), author.strip())
+                    quotes.append(new_quote)
 
         return quotes
