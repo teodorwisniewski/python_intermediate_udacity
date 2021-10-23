@@ -1,3 +1,4 @@
+"""Module that defines an ingestor for csv files."""
 from typing import List
 import csv
 from .IngestorInterface import IngestorInterface
@@ -5,12 +6,17 @@ from .QuoteModel import QuoteModel
 
 
 class CSVIngestor(IngestorInterface):
-    """CSVIngestor allows to parse csv files"""
+    """CSVIngestor allows to parse csv files."""
 
     allowed_exts = ["csv"]
 
     @classmethod
     def parse(cls, path: str) -> List[QuoteModel]:
+        """Parse method that allows to parse csv files.
+
+        @param path: path to a csv file.
+        @return: list of QuoteModel objects
+        """
         if not cls.can_ingest(path):
             raise Exception(f"Extension is not allowed")
 
