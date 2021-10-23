@@ -37,7 +37,9 @@ class MemeEngine:
         font_size = int(new_height / 15)
         draw = ImageDraw.Draw(self.img)
         font = ImageFont.truetype("../fonts/LilitaOne-Regular.ttf", size=font_size)
-        draw.text((30, 50), text, font=font, fill="red")
+        x_loc, y_loc = 30, 50
+        draw.text((x_loc, y_loc), text, font=font, fill="red")
+        draw.text((int(x_loc * 1.25), y_loc + font_size), " - " + author, font=font, fill="red")
         # saving output image file
         filename_basename = os.path.basename(self.path)
         new_filename = (
