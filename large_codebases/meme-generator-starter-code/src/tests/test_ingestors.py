@@ -1,19 +1,9 @@
-"""Check that data can be extracted from structured data files.
-
-The `load_neos` function should load a collection of `NearEarthObject`s from a
-CSV file, and the `load_approaches` function should load a collection of
-`CloseApproach` objects from a JSON file.
-
+"""Check that data can be ingested from different types of files.
 To run these tests from the project root, run:
 
-    $ python3 -m unittest --verbose tests.test_extract
-
-These tests should pass when Task 2 is complete.
+    $ python3 -m unittest --verbose tests.test_ingestors
 """
-import collections.abc
-import datetime
 from pathlib import Path
-import math
 from typing import List
 import unittest
 import sys
@@ -32,13 +22,15 @@ from QuoteEngine import Ingestor
 
 
 TESTS_ROOT = (Path(__file__).parent.parent).resolve()
-TEST_TXT_FILE = TESTS_ROOT / '_data' / 'DogQuotes'  / 'DogQuotesTXT.txt'
-TEST_CSV_FILE = TESTS_ROOT / '_data' / 'DogQuotes'  / 'DogQuotesCSV.csv'
-TEST_DOCX_FILE = TESTS_ROOT / '_data' / 'DogQuotes'  / 'DogQuotesDOCX.docx'
-TEST_PDF_FILE = TESTS_ROOT / '_data' / 'DogQuotes'  / 'DogQuotesPDF.pdf'
-TEST_GENERAL_FILE = TESTS_ROOT / '_data' / 'DogQuotes'  / 'DogQuotesPDF.pdf'
+TEST_TXT_FILE = TESTS_ROOT / "_data" / "DogQuotes" / "DogQuotesTXT.txt"
+TEST_CSV_FILE = TESTS_ROOT / "_data" / "DogQuotes" / "DogQuotesCSV.csv"
+TEST_DOCX_FILE = TESTS_ROOT / "_data" / "DogQuotes" / "DogQuotesDOCX.docx"
+TEST_PDF_FILE = TESTS_ROOT / "_data" / "DogQuotes" / "DogQuotesPDF.pdf"
+TEST_GENERAL_FILE = TESTS_ROOT / "_data" / "DogQuotes" / "DogQuotesPDF.pdf"
 
-class TestLoadNEOs(unittest.TestCase):
+
+class TestQuoteEngine(unittest.TestCase):
+
     @classmethod
     def setUpClass(cls):
         cls.txt_ingestor_output = TXTIngestor.parse(TEST_TXT_FILE)
@@ -51,7 +43,7 @@ class TestLoadNEOs(unittest.TestCase):
         self.assertIsNotNone(self.txt_ingestor_output)
         self.assertIsInstance(self.txt_ingestor_output, List)
         self.assertIsInstance(self.txt_ingestor_output[0], QuoteModel)
-        self.assertEqual(len(self.txt_ingestor_output),2)
+        self.assertEqual(len(self.txt_ingestor_output), 2)
         self.assertEqual(self.txt_ingestor_output[0].author, "Bork")
         self.assertRaises(Exception, CSVIngestor.parse, TEST_TXT_FILE)
 
@@ -59,7 +51,7 @@ class TestLoadNEOs(unittest.TestCase):
         self.assertIsNotNone(self.csv_ingestor_output)
         self.assertIsInstance(self.csv_ingestor_output, List)
         self.assertIsInstance(self.csv_ingestor_output[0], QuoteModel)
-        self.assertEqual(len(self.csv_ingestor_output),2)
+        self.assertEqual(len(self.csv_ingestor_output), 2)
         self.assertEqual(self.csv_ingestor_output[0].author, "Skittle")
         self.assertRaises(Exception, CSVIngestor.parse, TEST_PDF_FILE)
 
@@ -67,7 +59,7 @@ class TestLoadNEOs(unittest.TestCase):
         self.assertIsNotNone(self.docx_ingestor_output)
         self.assertIsInstance(self.docx_ingestor_output, List)
         self.assertIsInstance(self.docx_ingestor_output[0], QuoteModel)
-        self.assertEqual(len(self.docx_ingestor_output),4)
+        self.assertEqual(len(self.docx_ingestor_output), 4)
         self.assertEqual(self.docx_ingestor_output[0].author, "Rex")
         self.assertRaises(Exception, DOCXIngestor.parse, TEST_PDF_FILE)
 
@@ -75,7 +67,7 @@ class TestLoadNEOs(unittest.TestCase):
         self.assertIsNotNone(self.pdf_ingestor_output)
         self.assertIsInstance(self.pdf_ingestor_output, List)
         self.assertIsInstance(self.pdf_ingestor_output[0], QuoteModel)
-        self.assertEqual(len(self.pdf_ingestor_output),3)
+        self.assertEqual(len(self.pdf_ingestor_output), 3)
         self.assertEqual(self.pdf_ingestor_output[0].author, "Fluffles")
         self.assertRaises(Exception, PDFIngestor.parse, TEST_DOCX_FILE)
 
@@ -83,10 +75,10 @@ class TestLoadNEOs(unittest.TestCase):
         self.assertIsNotNone(self.general_ingestor_output)
         self.assertIsInstance(self.general_ingestor_output, List)
         self.assertIsInstance(self.general_ingestor_output[0], QuoteModel)
-        self.assertEqual(len(self.general_ingestor_output),3)
+        self.assertEqual(len(self.general_ingestor_output), 3)
         self.assertEqual(self.general_ingestor_output[0].author, "Fluffles")
         self.assertEqual(Ingestor.parse("file.jpg"), [])
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()
