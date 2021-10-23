@@ -28,23 +28,23 @@ class MemeEngine:
         @param width: width of a the meme
         @return: path to the output image file
         """
-        self.img.show()
         # resizing the image
         ratio = width / float(self.img.size[0])
         height = int(ratio * float(self.img.size[1]))
-        img = self.img.resize((width, height), Image.NEAREST)
-        img.show()
+        self.img = self.img.resize((width, height), Image.NEAREST)
         # adding a quote to the image
-        new_height = img.height
-        font_size = int(new_height/15)
-        draw = ImageDraw.Draw(img)
+        new_height = self.img.height
+        font_size = int(new_height / 15)
+        draw = ImageDraw.Draw(self.img)
         font = ImageFont.truetype("../fonts/LilitaOne-Regular.ttf", size=font_size)
         draw.text((30, 50), text, font=font, fill="red")
-        img.show()
         # saving output image file
         filename_basename = os.path.basename(self.path)
-        new_filename = filename_basename.split(".")[0] + f"_{random.randint(0,1000000)}_with_quote.jpg"
+        new_filename = (
+            filename_basename.split(".")[0]
+            + f"_{random.randint(0,1000000)}_with_quote.jpg"
+        )
         output_path = os.path.join(img_path, new_filename)
-        img.save(output_path)
+        self.img.save(output_path)
 
         return output_path
