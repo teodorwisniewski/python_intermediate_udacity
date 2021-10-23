@@ -1,10 +1,16 @@
 import os
 import random
+import argparse
+import pathlib
+import sys
+from typing import Union
 
-# @TODO Import your Ingestor and MemeEngine classes
+from QuoteEngine import Ingestor
+from QuoteEngine import QuoteModel
+from MemeEngine import MemeEngine
 
 
-def generate_meme(path=None, body=None, author=None):
+def generate_meme(path=None, body=None, author=None) -> Union[str, bytes, os.PathLike]:
     """ Generate a meme given an path and a quote """
     img = None
     quote = None
@@ -39,10 +45,44 @@ def generate_meme(path=None, body=None, author=None):
     return path
 
 
+def is_valid_file(path: Union[str, bytes, os.PathLike]) ->bool:
+    if os.path.isfile(path):
+        return path
+    else:
+        raise FileNotFoundError(path)
+
+
+def parse_args(args):
+    parser = argparse.ArgumentParser(
+        description="Create a meme with a quote and cute dog."
+    )
+
+    # Add arguments for custom data files.
+    parser.add_argument(
+        "--path",
+        default=None,
+        type=is_valid_file,
+        help="path to the image file",
+    )
+    parser.add_argument(
+        "--body",
+        default=None,
+        type=str,
+        help="quote\'s body to add to the image",
+    )
+    parser.add_argument(
+        "--author",
+        default=None,
+        type=str,
+        help="quote\'s author to add to the image",
+    )
+    return parser.parse_args(args)
+
+
 if __name__ == "__main__":
-    # @TODO Use ArgumentParser to parse the following CLI arguments
-    # path - path to an image file
-    # body - quote body to add to the image
-    # author - quote author to add to the image
-    args = None
+
+    PROJECT_ROOT = pathlib.Path(__file__).parent.resolve()
+    DATA_ROOT = PROJECT_ROOT / "data"
+
+    args = parse_args(sys.argv[1:])
     print(generate_meme(args.path, args.body, args.author))
