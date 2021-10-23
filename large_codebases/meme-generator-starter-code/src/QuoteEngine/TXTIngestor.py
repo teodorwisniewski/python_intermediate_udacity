@@ -4,7 +4,7 @@ from .QuoteModel import QuoteModel
 
 
 class TXTIngestor(IngestorInterface):
-
+    """TXTIngestor allows to parse txt files"""
     allowed_exts = ["txt"]
 
     @classmethod

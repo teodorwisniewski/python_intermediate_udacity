@@ -8,7 +8,7 @@ from .TXTIngestor import TXTIngestor
 
 
 class PDFIngestor(IngestorInterface):
-
+    """PDFIngestor allows to parse pdf files"""
     allowed_exts = ["pdf"]
 
     @classmethod

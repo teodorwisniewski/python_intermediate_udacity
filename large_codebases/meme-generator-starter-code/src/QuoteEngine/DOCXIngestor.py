@@ -5,6 +5,7 @@ from .QuoteModel import QuoteModel
 
 
 class DOCXIngestor(IngestorInterface):
+    """DOCXIngestor allows to parse docx files"""
 
     allowed_exts = ["docx"]
 

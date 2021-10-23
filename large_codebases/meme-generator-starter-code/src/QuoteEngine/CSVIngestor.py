@@ -5,6 +5,7 @@ from .QuoteModel import QuoteModel
 
 
 class CSVIngestor(IngestorInterface):
+    """CSVIngestor allows to parse csv files"""
 
     allowed_exts = ["csv"]
 
