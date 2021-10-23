@@ -11,7 +11,6 @@ class MemeEngine:
     def __init__(self, path: Union[str, bytes, os.PathLike]):
         """Init method for MemeEngine class."""
         self.path = path
-        self.img = Image.open(self.path)
 
     def make_meme(
         self,
@@ -28,25 +27,30 @@ class MemeEngine:
         @param width: width of a the meme
         @return: path to the output image file
         """
-        # resizing the image
-        ratio = width / float(self.img.size[0])
-        height = int(ratio * float(self.img.size[1]))
-        self.img = self.img.resize((width, height), Image.NEAREST)
-        # adding a quote to the image
-        new_height = self.img.height
-        font_size = int(new_height / 15)
-        draw = ImageDraw.Draw(self.img)
-        font = ImageFont.truetype("../fonts/LilitaOne-Regular.ttf", size=font_size)
-        x_loc, y_loc = 30, 50
-        draw.text((x_loc, y_loc), text, font=font, fill="red")
-        draw.text((int(x_loc * 1.25), y_loc + font_size), " - " + author, font=font, fill="red")
-        # saving output image file
-        filename_basename = os.path.basename(self.path)
-        new_filename = (
-            filename_basename.split(".")[0]
-            + f"_{random.randint(0,1000000)}_with_quote.jpg"
-        )
-        output_path = os.path.join(img_path, new_filename)
-        self.img.save(output_path)
+        try:
+            self.img = Image.open(self.path)
+            # resizing the image
+            ratio = width / float(self.img.size[0])
+            height = int(ratio * float(self.img.size[1]))
+            self.img = self.img.resize((width, height), Image.NEAREST)
+            # adding a quote to the image
+            new_height = self.img.height
+            font_size = int(new_height / 15)
+            draw = ImageDraw.Draw(self.img)
+            font = ImageFont.truetype("../fonts/LilitaOne-Regular.ttf", size=font_size)
+            x_loc, y_loc = 30, 50
+            draw.text((x_loc, y_loc), text, font=font, fill="red")
+            draw.text((int(x_loc * 1.25), y_loc + font_size), " - " + author, font=font, fill="red")
+            # saving output image file
+            filename_basename = os.path.basename(self.path)
+            new_filename = (
+                filename_basename.split(".")[0]
+                + f"_{random.randint(0,1000000)}_with_quote.jpg"
+            )
+            output_path = os.path.join(img_path, new_filename)
+            self.img.save(output_path)
+        except Exception:
+            print("The image cannot be opened")
+            output_path = None
 
         return output_path
