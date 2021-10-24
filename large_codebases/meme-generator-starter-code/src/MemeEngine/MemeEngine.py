@@ -5,6 +5,7 @@ from typing import Union
 import random
 from PIL import Image, ImageDraw, ImageFont
 from pathlib import Path
+import textwrap
 
 root_directory = Path(__file__).parent.parent.resolve()
 
@@ -38,13 +39,17 @@ class MemeEngine:
             self.img = self.img.resize((width, height), Image.NEAREST)
             # adding a quote to the image
             new_height = self.img.height
-            font_size = int(new_height / 18)
+            font_size = int(new_height / 12)
             draw = ImageDraw.Draw(self.img)
-            font_path = root_directory / "fonts/LilitaOne-Regular.ttf"
+            font_path = root_directory / "fonts/CollegiateFLF.ttf"
             font = ImageFont.truetype(str(font_path), size=font_size)
-            x_loc, y_loc = 30, 50
-            draw.text((x_loc, y_loc), text, font=font, fill="red")
-            draw.text((int(x_loc * 1.25), y_loc + font_size), " - " + author, font=font, fill="red")
+            y_loc = 50
+            lines = textwrap.wrap(f"\"{text}\" - {author}", width=18)
+            for line in lines:
+                line_width, line_height = font.getsize(line)
+                x_loc = (width - line_width) / 2
+                draw.text((x_loc, y_loc), line, font=font, fill="white")
+                y_loc += line_height
             # saving output image file
             filename_basename = os.path.basename(img_path)
             new_filename = (
