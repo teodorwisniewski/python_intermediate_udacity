@@ -25,15 +25,13 @@ PHOTO4_FILE = TESTS_ROOT / "_data" / "photos" / "dog" /  "xander_4.jpg"
 
 
 class TestMemeEngine(unittest.TestCase):
-    @classmethod
-    def setUpClass(cls):
-        cls.meme_gen = MemeEngine(path=PHOTO1_FILE)
 
     def test_make_meme(self):
-        self.assertIsInstance(self.meme_gen.img, ImageFile.ImageFile)
         with TemporaryDirectory() as tmpdir:
-            output_path = self.meme_gen.make_meme(tmpdir, "tested quote", "random author")
+            meme_gen = MemeEngine(tmpdir)
+            output_path = meme_gen.make_meme(PHOTO1_FILE, "tested quote", "random author")
             self.assertEqual(os.path.isfile(output_path), True)
+        self.assertIsInstance(meme_gen.img, Image.Image)
 
 if __name__ == "__main__":
     unittest.main()
