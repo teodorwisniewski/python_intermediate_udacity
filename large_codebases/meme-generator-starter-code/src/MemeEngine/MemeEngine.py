@@ -6,7 +6,7 @@ import random
 from PIL import Image, ImageDraw, ImageFont
 from pathlib import Path
 
-root_directory = (Path(__file__).parent.parent).resolve()
+root_directory = Path(__file__).parent.parent.resolve()
 
 class MemeEngine:
     """This class allows to load an image and add a text to it in order to create a meme."""

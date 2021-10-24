@@ -5,10 +5,13 @@ import argparse
 import pathlib
 import sys
 from typing import Union
+from pathlib import Path
 
 from QuoteEngine import Ingestor
 from QuoteEngine import QuoteModel
 from MemeEngine import MemeEngine
+
+root_directory = Path(__file__).parent.resolve()
 
 
 def generate_meme(path=None, body=None, author=None) -> Union[str, bytes, os.PathLike]:
@@ -41,7 +44,7 @@ def generate_meme(path=None, body=None, author=None) -> Union[str, bytes, os.Pat
             raise Exception('Author Required if Body is Used')
         quote = QuoteModel(body, author)
 
-    meme = MemeEngine(pathlib.Path('../tmp'))
+    meme = MemeEngine(root_directory / 'tmp')
     path = meme.make_meme(imgage_path, quote.body, quote.author)
     return path
 

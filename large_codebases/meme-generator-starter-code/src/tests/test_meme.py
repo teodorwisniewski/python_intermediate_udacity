@@ -7,11 +7,12 @@ from pathlib import Path
 import unittest
 import sys
 import os
+from meme import parse_args, generate_meme
 
 project_path = Path(os.getcwd()) / "src"
 sys.path.append(str(project_path))
 
-from meme import parse_args, generate_meme
+
 
 
 TESTS_ROOT = (Path(__file__).parent.parent).resolve()
