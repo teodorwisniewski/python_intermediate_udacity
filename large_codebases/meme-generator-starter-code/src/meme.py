@@ -21,9 +21,9 @@ def generate_meme(path=None, body=None, author=None) -> Union[str, bytes, os.Pat
         for root, dirs, files in os.walk(images):
             imgs = [os.path.join(root, name) for name in files]
 
-        img = random.choice(imgs)
+        imgage_path = random.choice(imgs)
     else:
-        img = path[0]
+        imgage_path = path
 
     if body is None:
         quote_files = ['./_data/DogQuotes/DogQuotesTXT.txt',
@@ -40,8 +40,8 @@ def generate_meme(path=None, body=None, author=None) -> Union[str, bytes, os.Pat
             raise Exception('Author Required if Body is Used')
         quote = QuoteModel(body, author)
 
-    meme = MemeEngine('./tmp')
-    path = meme.make_meme(img, quote.body, quote.author)
+    meme = MemeEngine(pathlib.Path('../tmp'))
+    path = meme.make_meme(imgage_path, quote.body, quote.author)
     return path
 
 
