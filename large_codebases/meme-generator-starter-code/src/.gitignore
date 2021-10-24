@@ -1,0 +1,10 @@
+
+
+
+static/*.jpg
+
+tmp/*.jpg
+
+.idea
+__pycache__
+venv
