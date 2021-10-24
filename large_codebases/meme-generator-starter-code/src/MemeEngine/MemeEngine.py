@@ -8,9 +8,9 @@ from PIL import Image, ImageDraw, ImageFont
 class MemeEngine:
     """This class allows to load an image and add a text to it in order to create a meme."""
 
-    def __init__(self, path: Union[str, bytes, os.PathLike]):
+    def __init__(self, output_path: Union[str, bytes, os.PathLike]):
         """Init method for MemeEngine class."""
-        self.path = path
+        self.output_path = output_path
 
     def make_meme(
         self,
@@ -28,7 +28,7 @@ class MemeEngine:
         @return: path to the output image file
         """
         try:
-            self.img = Image.open(self.path)
+            self.img = Image.open(img_path)
             # resizing the image
             ratio = width / float(self.img.size[0])
             height = int(ratio * float(self.img.size[1]))
@@ -42,12 +42,12 @@ class MemeEngine:
             draw.text((x_loc, y_loc), text, font=font, fill="red")
             draw.text((int(x_loc * 1.25), y_loc + font_size), " - " + author, font=font, fill="red")
             # saving output image file
-            filename_basename = os.path.basename(self.path)
+            filename_basename = os.path.basename(img_path)
             new_filename = (
                 filename_basename.split(".")[0]
                 + f"_{random.randint(0,1000000)}_with_quote.jpg"
             )
-            output_path = os.path.join(img_path, new_filename)
+            output_path = os.path.join(self.output_path, new_filename)
             self.img.save(output_path)
         except Exception:
             print("The image cannot be opened")
