@@ -4,7 +4,9 @@ import sys
 from typing import Union
 import random
 from PIL import Image, ImageDraw, ImageFont
+from pathlib import Path
 
+root_directory = (Path(__file__).parent.parent).resolve()
 
 class MemeEngine:
     """This class allows to load an image and add a text to it in order to create a meme."""
@@ -36,9 +38,10 @@ class MemeEngine:
             self.img = self.img.resize((width, height), Image.NEAREST)
             # adding a quote to the image
             new_height = self.img.height
-            font_size = int(new_height / 15)
+            font_size = int(new_height / 18)
             draw = ImageDraw.Draw(self.img)
-            font = ImageFont.truetype("../fonts/LilitaOne-Regular.ttf", size=font_size)
+            font_path = root_directory / "fonts/LilitaOne-Regular.ttf"
+            font = ImageFont.truetype(str(font_path), size=font_size)
             x_loc, y_loc = 30, 50
             draw.text((x_loc, y_loc), text, font=font, fill="red")
             draw.text((int(x_loc * 1.25), y_loc + font_size), " - " + author, font=font, fill="red")

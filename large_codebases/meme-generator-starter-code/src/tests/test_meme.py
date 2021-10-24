@@ -7,8 +7,6 @@ from pathlib import Path
 import unittest
 import sys
 import os
-from tempfile import TemporaryDirectory
-
 
 project_path = Path(os.getcwd()) / "src"
 sys.path.append(str(project_path))

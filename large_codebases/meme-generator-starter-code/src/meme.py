@@ -1,3 +1,4 @@
+"""Module that defines how to create a new meme."""
 import os
 import random
 import argparse
@@ -11,7 +12,7 @@ from MemeEngine import MemeEngine
 
 
 def generate_meme(path=None, body=None, author=None) -> Union[str, bytes, os.PathLike]:
-    """ Generate a meme given an path and a quote """
+    """Generate a meme given an path and a quote."""
     img = None
     quote = None
 
@@ -46,6 +47,7 @@ def generate_meme(path=None, body=None, author=None) -> Union[str, bytes, os.Pat
 
 
 def is_valid_file(path: Union[str, bytes, os.PathLike]) ->bool:
+    """Check if a path represents an existing file."""
     if os.path.isfile(path):
         return path
     else:
@@ -53,6 +55,7 @@ def is_valid_file(path: Union[str, bytes, os.PathLike]) ->bool:
 
 
 def parse_args(args):
+    """Parse argument function. This function is created for testing purposes."""
     parser = argparse.ArgumentParser(
         description="Create a meme with a quote and cute dog."
     )
