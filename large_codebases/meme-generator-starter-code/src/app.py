@@ -2,13 +2,13 @@
 import random
 import os
 import requests
-from flask import Flask, render_template, abort, request
+from flask import Flask, render_template, abort, request, flash, redirect, url_for
 
 from QuoteEngine import Ingestor
 from MemeEngine import MemeEngine
 
 app = Flask(__name__)
-
+app.secret_key = "random  key"
 meme = MemeEngine('./static')
 
 
@@ -54,16 +54,35 @@ def meme_form():
 @app.route('/create', methods=['POST'])
 def meme_post():
     """Create a user defined meme."""
-    image_url = request.form.get("image_url")
-    body = request.form.get("body")
-    author = request.form.get("author")
-    r = requests.get(image_url, allow_redirects=True)
+    try:
+        image_url = request.form.get("image_url")
+        r = requests.get(image_url, stream=True)
+    except requests.exceptions.RequestException:
+        flash("Enter a valid URL address.")
+        return redirect(url_for("meme_form"))
+
     if not os.path.exists('./tmp'):
         os.mkdir('./tmp')
     img_path = f'./tmp/{random.randint(0, 100000000)}.png'
-    open(img_path, 'wb').write(r.content)
-    meme_path = meme.make_meme(img_path, body, author)
-    os.remove(img_path)
+    with open(img_path, 'wb') as file:
+        file.write(r.content)
+
+    body = request.form.get("body")
+    author = request.form.get("author")
+    if not (author and body):
+        flash("Don't forget to enter a quote and an author.")
+        return redirect(url_for("meme_form"))
+
+    try:
+        meme_path = meme.make_meme(img_path, body, author)
+    except:
+        flash("Invalid data entered.")
+        if os.path.exists(img_path):
+            os.remove(img_path)
+        return redirect(url_for("meme_form"))
+
+    if os.path.exists(img_path):
+        os.remove(img_path)
 
     return render_template('meme.html', path=meme_path)
 
