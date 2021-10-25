@@ -30,7 +30,6 @@ TEST_GENERAL_FILE = TESTS_ROOT / "_data" / "DogQuotes" / "DogQuotesPDF.pdf"
 
 
 class TestQuoteEngine(unittest.TestCase):
-
     @classmethod
     def setUpClass(cls):
         cls.txt_ingestor_output = TXTIngestor.parse(TEST_TXT_FILE)
