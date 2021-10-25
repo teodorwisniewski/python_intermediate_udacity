@@ -4,7 +4,7 @@
 class QuoteModel:
     """Quote model class that contains quote data."""
 
-    def __init__(self, body: str, author:str):
+    def __init__(self, body: str, author: str):
         """Create a new QuoteModel object.
 
         @param body: content of a quote

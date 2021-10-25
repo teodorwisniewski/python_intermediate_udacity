@@ -30,10 +30,12 @@ def generate_meme(path=None, body=None, author=None) -> Union[str, bytes, os.Pat
         imgage_path = path
 
     if body is None:
-        quote_files = ['./_data/DogQuotes/DogQuotesTXT.txt',
-                       './_data/DogQuotes/DogQuotesDOCX.docx',
-                       './_data/DogQuotes/DogQuotesPDF.pdf',
-                       './_data/DogQuotes/DogQuotesCSV.csv']
+        quote_files = [
+            "./_data/DogQuotes/DogQuotesTXT.txt",
+            "./_data/DogQuotes/DogQuotesDOCX.docx",
+            "./_data/DogQuotes/DogQuotesPDF.pdf",
+            "./_data/DogQuotes/DogQuotesCSV.csv",
+        ]
         quotes = []
         for f in quote_files:
             quotes.extend(Ingestor.parse(f))
@@ -41,15 +43,15 @@ def generate_meme(path=None, body=None, author=None) -> Union[str, bytes, os.Pat
         quote = random.choice(quotes)
     else:
         if author is None:
-            raise Exception('Author Required if Body is Used')
+            raise Exception("Author Required if Body is Used")
         quote = QuoteModel(body, author)
 
-    meme = MemeEngine(root_directory / 'tmp')
+    meme = MemeEngine(root_directory / "tmp")
     path = meme.make_meme(imgage_path, quote.body, quote.author)
     return path
 
 
-def is_valid_file(path: Union[str, bytes, os.PathLike]) ->bool:
+def is_valid_file(path: Union[str, bytes, os.PathLike]) -> bool:
     """Check if a path represents an existing file."""
     if os.path.isfile(path):
         return path
@@ -74,13 +76,13 @@ def parse_args(args):
         "--body",
         default=None,
         type=str,
-        help="quote\'s body to add to the image",
+        help="quote's body to add to the image",
     )
     parser.add_argument(
         "--author",
         default=None,
         type=str,
-        help="quote\'s author to add to the image",
+        help="quote's author to add to the image",
     )
     return parser.parse_args(args)
 

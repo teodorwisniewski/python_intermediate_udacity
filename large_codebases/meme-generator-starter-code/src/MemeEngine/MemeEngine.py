@@ -9,6 +9,7 @@ import textwrap
 
 root_directory = Path(__file__).parent.parent.resolve()
 
+
 class MemeEngine:
     """This class allows to load an image and add a text to it in order to create a meme."""
 
@@ -42,8 +43,8 @@ class MemeEngine:
         draw = ImageDraw.Draw(self.img)
         font_path = root_directory / "fonts/CollegiateFLF.ttf"
         font = ImageFont.truetype(str(font_path), size=font_size)
-        y_loc = 50
-        lines = textwrap.wrap(f"\"{text}\" - {author}", width=18)
+        y_loc = random.randint(0, 100)  # random location of the quote
+        lines = textwrap.wrap(f'"{text}" - {author}', width=18)
         for line in lines:
             line_width, line_height = font.getsize(line)
             x_loc = (width - line_width) / 2
@@ -57,6 +58,5 @@ class MemeEngine:
         )
         output_path = os.path.join(self.output_path, new_filename)
         self.img.save(output_path)
-
 
         return output_path

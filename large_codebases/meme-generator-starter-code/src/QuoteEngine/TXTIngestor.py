@@ -23,9 +23,9 @@ class TXTIngestor(IngestorInterface):
 
         with open(path, "r") as f:
             for line in f.readlines():
-                line = line.strip('\n\r').strip()
+                line = line.strip("\n\r").strip()
                 if len(line) > 0:
-                    body, author = line.split('-')
+                    body, author = line.split("-")
                     new_quote = QuoteModel(body.strip().strip('"'), author.strip())
                     quotes.append(new_quote)
 
