@@ -10,14 +10,18 @@ from .DOCXIngestor import DOCXIngestor
 
 
 class Ingestor(IngestorInterface):
-    """Ingestor class encapsulates defined helper classes for different file formats."""
+    """
+        Ingestor class that encapsulates helper classes.
+        It is defined for different file formats.
+    """
 
     allowed_ingestors = [CSVIngestor, TXTIngestor, PDFIngestor, DOCXIngestor]
     allowed_exts = ["docx", "csv", "pdf", "txt"]
 
     @classmethod
     def parse(cls, path: str) -> List[QuoteModel]:
-        """Parse method to parse files and return a list of quote model objects.
+        """
+        Parse method to parse files and return a list of quote model objects.
 
         @param path: path to a file.
         @return: list of QuoteModel objects
