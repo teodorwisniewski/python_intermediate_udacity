@@ -31,38 +31,32 @@ class MemeEngine:
         @param width: width of a the meme
         @return: path to the output image file
         """
-        try:
-            self.img = Image.open(img_path)
-            # resizing the image
-            ratio = width / float(self.img.size[0])
-            height = int(ratio * float(self.img.size[1]))
-            self.img = self.img.resize((width, height), Image.NEAREST)
-            # adding a quote to the image
-            new_height = self.img.height
-            font_size = int(new_height / 12)
-            draw = ImageDraw.Draw(self.img)
-            font_path = root_directory / "fonts/CollegiateFLF.ttf"
-            font = ImageFont.truetype(str(font_path), size=font_size)
-            y_loc = 50
-            lines = textwrap.wrap(f"\"{text}\" - {author}", width=18)
-            for line in lines:
-                line_width, line_height = font.getsize(line)
-                x_loc = (width - line_width) / 2
-                draw.text((x_loc, y_loc), line, font=font, fill="white")
-                y_loc += line_height
-            # saving output image file
-            filename_basename = os.path.basename(img_path)
-            new_filename = (
-                filename_basename.split(".")[0]
-                + f"_{random.randint(0,1000000)}_with_quote.jpg"
-            )
-            output_path = os.path.join(self.output_path, new_filename)
-            self.img.save(output_path)
-        except Exception as e:
-            exc_type, exc_obj, exc_tb = sys.exc_info()
-            fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
-            print(exc_type, fname, exc_tb.tb_lineno)
-            print("The image cannot be opened")
-            output_path = None
+        self.img = Image.open(img_path)
+        # resizing the image
+        ratio = width / float(self.img.size[0])
+        height = int(ratio * float(self.img.size[1]))
+        self.img = self.img.resize((width, height), Image.NEAREST)
+        # adding a quote to the image
+        new_height = self.img.height
+        font_size = int(new_height / 12)
+        draw = ImageDraw.Draw(self.img)
+        font_path = root_directory / "fonts/CollegiateFLF.ttf"
+        font = ImageFont.truetype(str(font_path), size=font_size)
+        y_loc = 50
+        lines = textwrap.wrap(f"\"{text}\" - {author}", width=18)
+        for line in lines:
+            line_width, line_height = font.getsize(line)
+            x_loc = (width - line_width) / 2
+            draw.text((x_loc, y_loc), line, font=font, fill="white")
+            y_loc += line_height
+        # saving output image file
+        filename_basename = os.path.basename(img_path)
+        new_filename = (
+            filename_basename.split(".")[0]
+            + f"_{random.randint(0,1000000)}_with_quote.jpg"
+        )
+        output_path = os.path.join(self.output_path, new_filename)
+        self.img.save(output_path)
+
 
         return output_path
