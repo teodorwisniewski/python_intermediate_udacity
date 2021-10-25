@@ -14,7 +14,9 @@ from MemeEngine import MemeEngine
 root_directory = Path(__file__).parent.resolve()
 
 
-def generate_meme(path=None, body=None, author=None) -> Union[str, bytes, os.PathLike]:
+def generate_meme(path=None,
+                  body=None,
+                  author=None) -> Union[str, bytes, os.PathLike]:
     """Generate a meme given an path and a quote."""
     img = None
     quote = None
@@ -60,7 +62,10 @@ def is_valid_file(path: Union[str, bytes, os.PathLike]) -> bool:
 
 
 def parse_args(args):
-    """Parse argument function. This function is created for testing purposes."""
+    """
+        Parse argument function.
+        This function is created for testing purposes.
+    """
     parser = argparse.ArgumentParser(
         description="Create a meme with a quote and cute dog."
     )

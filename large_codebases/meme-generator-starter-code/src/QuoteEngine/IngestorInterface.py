@@ -13,7 +13,9 @@ class IngestorInterface(ABC):
 
     @classmethod
     def can_ingest(cls, path: str) -> bool:
-        """Can_ingest method for checking whether a file can be parsed or not."""
+        """
+            Can_ingest method for checking whether a file can be parsed or not.
+        """
         format = pathlib.Path(path).suffix[1:].lower()
         return format in cls.allowed_exts
 

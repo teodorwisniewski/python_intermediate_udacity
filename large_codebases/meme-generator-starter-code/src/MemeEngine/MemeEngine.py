@@ -11,7 +11,10 @@ root_directory = Path(__file__).parent.parent.resolve()
 
 
 class MemeEngine:
-    """This class allows to load an image and add a text to it in order to create a meme."""
+    """
+        This class allows to load an image.
+        Then it adds a text to it in order to create a meme.
+    """
 
     def __init__(self, output_path: Union[str, bytes, os.PathLike]):
         """Init method for MemeEngine class."""

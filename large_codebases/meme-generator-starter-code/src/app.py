@@ -2,7 +2,7 @@
 import random
 import os
 import requests
-from flask import Flask, render_template, abort, request, flash, redirect, url_for
+from flask import Flask, render_template, request, flash, redirect, url_for
 
 from QuoteEngine import Ingestor
 from MemeEngine import MemeEngine
@@ -77,7 +77,8 @@ def meme_post():
 
     try:
         meme_path = meme.make_meme(img_path, body, author)
-    except:
+    except Exception as e:
+        print(e)
         flash("Invalid data entered.")
         if os.path.exists(img_path):
             os.remove(img_path)

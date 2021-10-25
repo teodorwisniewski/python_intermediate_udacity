@@ -26,7 +26,8 @@ class TXTIngestor(IngestorInterface):
                 line = line.strip("\n\r").strip()
                 if len(line) > 0:
                     body, author = line.split("-")
-                    new_quote = QuoteModel(body.strip().strip('"'), author.strip())
+                    new_quote = QuoteModel(body.strip().strip('"'),
+                                           author.strip())
                     quotes.append(new_quote)
 
         return quotes
